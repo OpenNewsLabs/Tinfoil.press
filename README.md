@@ -1,4 +1,4 @@
-# Tinfoil
+Tinfoil
 =========
 Here's a quick rundown of how Tinfoil (https://tinfoil.press) is set up, both technically and socially. Tinfoil uses Discourse (https://github.com/discourse), which is a relatively easy-to-use platform for starting an online forum.
 
