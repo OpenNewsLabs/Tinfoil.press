@@ -1,5 +1,5 @@
 # Install Tor ('apt-get install tor')
-# If your server is on Linux, you'll generally find the relevant torrc file in /etc/tor/torrc
+# If you're running a Linux server, you'll generally find the relevant torrc file in /etc/tor/torrc
 # Edit the file ('nano /etc/tor/torrc')
 # Restart Tor when you're done ('sudo service tor restart')
 
