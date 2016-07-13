@@ -1,25 +1,25 @@
-Tinfoil
+Tinfoil.press
 =========
 Here's a quick rundown of how Tinfoil (https://tinfoil.press) is set up, and some tips about how to get your community started.
 
-Tinfoil uses Discourse (https://github.com/discourse), which is a relatively easy-to-use platform for starting an online forum. After that, we use a few extra bells and whistles - LetsEncrypt, the Auth0 plugin, and Tor hidden services.
+Tinfoil uses Discourse (https://github.com/discourse), a relatively easy-to-use platform for starting an online forum. After that, we use a few extra bells and whistles - LetsEncrypt, the Auth0 plugin, and Tor hidden services.
 
 Working within Discourse
 ---------
 
-1) Discourse is fairly flexible. I use DigitalOcean: https://digitalocean.com.
+1) I use DigitalOcean (https://digitalocean.com) to host Tinfoil.
 
 2) It needs a mailserver. You can use any you like (e.g., https://mailgun.com, https://mandrill.zendesk.com/hc/en-us). This account is necessary for creating STMP credentials necessary to send emails to users. This also allows us to open the Discourse server's DNS to the email provider.
 
-3) Follow the instructions here to set up your Discourse server on a Digital Ocean droplet: https://www.digitalocean.com/community/tutorials/how-to-install-discourse-on-ubuntu-14-04
+3) Tinfoil is installed on an Ubuntu 14.04 DigitalOcean droplet. https://www.digitalocean.com/community/tutorials/how-to-install-discourse-on-ubuntu-14-04
 
-Discourse is dockerized, andapp.yml ('/var/discourse/containers/app.yml') is essentially thecontrol tower, where we can configure Discourse by plugging in SMTP credentials, contact information, the domain, and potential plugins.
+4) It's dockerized, and app.yml ('/var/discourse/containers/app.yml') is essentially the control tower where we can configure Discourse by plugging in SMTP credentials, contact information, the domain, and potential plugins.
 
-4) I added 'web.ssl.template.yml' and 'web.letsencrypt.ssl.template.yml' to the templates in app.yml to install LetsEncrypt.
+5) I added 'web.ssl.template.yml' and 'web.letsencrypt.ssl.template.yml' to the templates in app.yml to install LetsEncrypt.
 
 **Tor hidden services**
 
-5) Tinfoil.press has a Tor hidden service. The relevant files are the torrc and app.yml. In app.yml, I switched on 'templates/web.onion.template.yml' and assigned a variable 'DISCOURSE_ONION' as my .onion URL.
+6) Tinfoil.press has a Tor hidden service. The relevant files are the torrc and app.yml. In app.yml, I switched on 'templates/web.onion.template.yml' and assigned a variable 'DISCOURSE_ONION' as my .onion URL.
 
 If you want to use Tor hidden services, there’s a bit of prep work. First install Tor, and configure your hidden service. 
 - Install Tor ('apt-get install tor')
