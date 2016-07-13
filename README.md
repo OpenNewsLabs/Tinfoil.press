@@ -2,7 +2,7 @@ Tinfoil.press
 =========
 Here's a quick rundown of how Tinfoil (https://tinfoil.press) is set up, and some tips about how to get your community started.
 
-Tinfoil uses Discourse (https://github.com/discourse), a relatively easy-to-use platform for starting an online forum. After that, we use a few extra bells and whistles - LetsEncrypt, the Auth0 plugin, and Tor hidden services.
+Tinfoil uses Discourse (https://github.com/discourse), a relatively easy-to-use platform for starting an online forum. After that, we use a few extra bells and whistles - LetsEncrypt, the Auth0 plugin, and Tor hidden services. 
 
 Working within Discourse
 ---------
@@ -15,6 +15,8 @@ Working within Discourse
 
 4) It's dockerized, and app.yml ('/var/discourse/containers/app.yml') is essentially the control tower where we can configure Discourse by plugging in SMTP credentials, contact information, the domain, and potential plugins.
 
+My app.yml: https://github.com/OpenNewsLabs/Tinfoil.press/blob/master/app.yml
+
 5) I added 'web.ssl.template.yml' and 'web.letsencrypt.ssl.template.yml' to the templates in app.yml to install LetsEncrypt.
 
 **Tor hidden services**
@@ -24,7 +26,7 @@ Working within Discourse
 If you want to use Tor hidden services, there’s a bit of prep work. First install Tor, and configure your hidden service. 
 - Install Tor ('apt-get install tor')
 - If your server is on Linux, you'll generally find the relevant torrc file in /etc/tor/torrc
-- Edit the file ('nano /etc/tor/torrc') to have it match the [torrc file]('https://github.com/OpenNewsLabs/Tinfoil.press/blob/master/torrc')
+- Edit the file ('nano /etc/tor/torrc') to have it match the torrc file here: https://github.com/OpenNewsLabs/Tinfoil.press/blob/master/torrc
 - Restart Tor when you're done ('sudo service tor restart')
 - With most standard Linux setups, you'll find your .onion URL in /var/lib/tor/hidden_service/hostname
 - In your Discourse app.yml, you'll need to enable 'templates/web.onion.template.yml' and assign 'DISCOURSE_ONION' as your .onion URL.
