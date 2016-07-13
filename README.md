@@ -2,34 +2,39 @@ Tinfoil
 =========
 Here's a quick rundown of how Tinfoil (https://tinfoil.press) is set up, and some tips about how to get your community started.
 
-Tinfoil uses Discourse (https://github.com/discourse), which is a relatively easy-to-use platform for starting an online forum.
+Tinfoil uses Discourse (https://github.com/discourse), which is a relatively easy-to-use platform for starting an online forum. After that, we use a few extra bells and whistles - LetsEncrypt, the Auth0 plugin, and Tor hidden services.
 
 Working within Discourse
 ---------
 
-1) Discourse can be set up pretty easily on DigitalOcean - that's what I use. Create an account on https://digitalocean.com.
+1) Discourse is fairly flexible. I use DigitalOcean: https://digitalocean.com.
 
-2) Create an account at Mailgun (https://mailgun.com), Mandrill (https://mandrill.zendesk.com/hc/en-us), or any inexpensive email host of your choice. You’ll use this account later to create STMP credentials that you’ll need to host your email. You'll also be required to follow some instructions about opening your server's DNS to the email provider.
+2) It needs a mailserver. You can use any you like (e.g., https://mailgun.com, https://mandrill.zendesk.com/hc/en-us). This account is necessary for creating STMP credentials necessary to send emails to users. This also allows us to open the Discourse server's DNS to the email provider.
 
 3) Follow the instructions here to set up your Discourse server on a Digital Ocean droplet: https://www.digitalocean.com/community/tutorials/how-to-install-discourse-on-ubuntu-14-04
 
-You'll plug in your SMTP credentials, contact information, URL, and customize your plugins here within the Discourse configuration in var/discourse/containers/app.yml. If all goes well, your site should be up at the URL you've specified in containers/app.yml.
+Discourse is dockerized, andapp.yml ('/var/discourse/containers/app.yml') is essentially thecontrol tower, where we can configure Discourse by plugging in SMTP credentials, contact information, the domain, and potential plugins.
 
-4) Install an HTTPS certificate with LetsEncrypt : https://meta.discourse.org/t/setting-up-lets-encrypt-cert-with-discourse-docker/40709 - it’s much (much) easier than installing a cert the old fashioned way.
-
-OR
-
-4) Alternatively, install a certificate with LetsEncrypt behind nginx: https://www.digitalocean.com/community/tutorials/how-to-install-discourse-behind-nginx-on-ubuntu-14-04. (Giving yourself access to nginx is important if you want to use Tor hidden services.)
+4) I added 'web.ssl.template.yml' and 'web.letsencrypt.ssl.template.yml' to the templates in app.yml to install LetsEncrypt.
 
 **Tor hidden services**
 
-5) If you want to use Tor hidden services, there’s a bit of prep work. First install Tor, and configure your hidden service: https://www.torproject.org/docs/tor-hidden-service.html.en
+5) Tinfoil.press has a Tor hidden service. The relevant files are the torrc and app.yml. In app.yml, I switched on 'templates/web.onion.template.yml' and assigned a variable 'DISCOURSE_ONION' as my .onion URL.
 
-6) Use the Onion template within your containers/app.yml. This will require nginx to forward Onion requests to port 80. https://meta.discourse.org/t/template-for-serving-through-an-onion-address-with-docker/41536
+If you want to use Tor hidden services, there’s a bit of prep work. First install Tor, and configure your hidden service. 
+- Install Tor ('apt-get install tor')
+- If your server is on Linux, you'll generally find the relevant torrc file in /etc/tor/torrc
+- Edit the file ('nano /etc/tor/torrc')
+- Restart Tor when you're done ('sudo service tor restart')
+- With most standard Linux setups, you'll find your .onion URL in /var/lib/tor/hidden_service/hostname
+- In your Discourse app.yml, you'll need to enable 'templates/web.onion.template.yml' and assign 'DISCOURSE_ONION' as your .onion URL.
+- After that, rebuild the app ('./launcher rebuild app'). After waiting, try visiting your .onion URL in Tor Browser. It should be up.
 
+More information here:
+https://www.torproject.org/docs/tor-hidden-service.html.en
+https://meta.discourse.org/t/template-for-serving-through-an-onion-address-with-docker/41536
 
-
-Now the hard part - building community
+Advice on the hard part - building community
 --------
 
 The hard part is building a commmunity - something I continue to learn about. Some tips I've found helpful so far: 
