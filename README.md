@@ -24,7 +24,7 @@ Working within Discourse
 If you want to use Tor hidden services, there’s a bit of prep work. First install Tor, and configure your hidden service. 
 - Install Tor ('apt-get install tor')
 - If your server is on Linux, you'll generally find the relevant torrc file in /etc/tor/torrc
-- Edit the file ('nano /etc/tor/torrc')
+- Edit the file ('nano /etc/tor/torrc') to have it match the [torrc file]('https://github.com/OpenNewsLabs/Tinfoil.press/blob/master/torrc')
 - Restart Tor when you're done ('sudo service tor restart')
 - With most standard Linux setups, you'll find your .onion URL in /var/lib/tor/hidden_service/hostname
 - In your Discourse app.yml, you'll need to enable 'templates/web.onion.template.yml' and assign 'DISCOURSE_ONION' as your .onion URL.
